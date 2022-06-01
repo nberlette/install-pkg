@@ -1,54 +1,60 @@
 {
-  "name": "@antfu/install-pkg",
+  "name": "@brlt/install",
   "version": "0.1.0",
-  "description": "Install package programmatically.",
+  "license": "MIT",
+  "author": "Nicholas Berlette <nick@berlette.com>",
+  "bugs": "https://github.com/nberlette/install-pkg/issues",
+  "homepage": "https://github.com/nberlette/install-pkg#readme",
+  "readme": "https://github.com/nberlette/install-pkg#readme",
+  "repository": "nberlette/install-pkg",
+  "description": "Install packages and their @types programmatically.",
+  "keywords": [
+    "npm", 
+    "pnpm",
+    "yarn",
+    "install",
+    "types",
+    "api",
+    "programmatic",
+    "installer"
+  ],
+  "sideEffects": false,
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
+      "import": "./dist/index.mjs"
     }
   },
-  "funding": "https://github.com/sponsors/antfu",
-  "author": "Anthony Fu <anthonyfu117@hotmail.com>",
-  "license": "MIT",
-  "sideEffects": false,
-  "bugs": {
-    "url": "https://github.com/antfu/install-pkg/issues"
-  },
-  "homepage": "https://github.com/antfu/install-pkg#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/antfu/install-pkg.git"
-  },
-  "keywords": [],
   "files": [
     "dist"
   ],
   "scripts": {
-    "prepublishOnly": "nr build",
     "dev": "nr build --watch",
     "start": "esno src/index.ts",
     "build": "tsup src/index.ts --format cjs,esm --dts --no-splitting",
-    "release": "bumpp --commit --push --tag && pnpm publish",
+    "preversion": "nr lint:fix && nr lint",
+    "postversion": "pnpm publish --access public",
+    "prepublishOnly": "nr build",
+    "release": "bumpp --commit '📦 %s' --all --push --tag && pnpm publish",
     "lint": "eslint \"{src,test}/**/*.ts\"",
     "lint:fix": "nr lint -- --fix"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.7.0",
-    "@antfu/ni": "^0.7.0",
-    "@types/node": "^16.10.1",
+    "@brlt/eslint-config": "^0.0.4",
+    "@brlt/n": "^0.1.1",
+    "@types/node": "^17.0.36",
     "bumpp": "^7.1.1",
-    "eslint": "^7.32.0",
-    "esno": "^0.9.1",
-    "tsup": "^4.14.0",
-    "typescript": "^4.4.3"
+    "eslint": "^8.16.0",
+    "esno": "^0.16.33",
+    "tsup": "^6.0.1",
+    "typescript": "^4.7.2"
   },
   "dependencies": {
-    "execa": "^5.1.1",
-    "find-up": "^5.0.0"
+    "execa": "^6.1.0",
+    "find-up": "^6.3.0"
   }
 }
